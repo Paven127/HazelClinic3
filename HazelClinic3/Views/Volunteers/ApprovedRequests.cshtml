@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HazelClinic3.Models.Volunteer>
+
+<h2>Approved Volunteers:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Volunteer Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var volunteer in Model)
+        {
+            <tr>
+                <td>@volunteer.FullName</td>
+                <td>@volunteer.Surname</td>
+                <td>@volunteer.Email</td>
+                <td>@volunteer.VolunteerType</td>
+                <td>
+                    @if (volunteer.VolunteerType == "No Preference")
+                    {
+                        <form action="@Url.Action("AllocateVolunteer", "Volunteers")" method="post">
+                            <input type="hidden" name="id" value="@volunteer.VolunteerId" />
+                            <select name="newVolunteerType" required>
+                                <option value="Dog Walking">Dog Walking</option>
+                                <option value="Cat Cuddling">Cat Cuddling</option>
+                                <option value="Puppy Training">Puppy Training</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Allocate</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p></p>
+@Html.ActionLink("Back to Admin Dashboard", "AdminLog", "Users2", null, new { @class = "btn btn-secondary" })

@@ -1,0 +1,296 @@
+﻿@model HazelClinic3.Models.Volunteer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        min-height: 100vh;
+    }
+
+    .background-image {
+        background-image: url('https://media.istockphoto.com/id/1324099927/photo/friends-red-cat-and-corgi-dog-walking-in-a-summer-meadow-under-the-drops-of-warm-rain.jpg?s=612x612&w=0&k=20&c=ZQiqn4SPj_7WhjhbahGJ1UwaJMrwuuSkJRjYAi9YYx0=');
+        background-size: cover;
+        background-position: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1; /* Keeps the background behind all other content */
+    }
+
+
+    p {
+        text-align: center;
+        margin: 15px 0;
+    }
+
+    .centered-text {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+    .background-container {
+        background-color: rgba(240, 240, 240, 0.75); /* Slightly transparent background color */
+        padding: 20px;
+        width: 48%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        box-sizing: border-box;
+        margin-top: 50px; /* Ensure space at the top */
+        margin-bottom: 50px; /* Ensure space at the bottom */
+    }
+
+        .background-container h2,
+        .background-container p,
+        .background-container ul,
+        .background-container table {
+            text-align: center;
+            width: 100%;
+        }
+
+        .background-container ul {
+            padding-left: 80px;
+            font-size: 18px;
+            list-style-type: none;
+        }
+
+        .background-container table {
+            margin-top: 50px;
+        }
+
+    .centered-button-container {
+        text-align: center;
+    }
+
+    .black-outline-button {
+        background-color: #003366;
+        border: 2px solid #003366;
+        color: white;
+        font-size: 1.1em;
+        padding: 12px 100px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+
+        .black-outline-button:hover {
+            background-color: #002244;
+            border-color: #002244;
+        }
+
+    form {
+        font-size: 18px; /* Adjust the font size as needed */
+    }
+
+    /* Increase font size for input fields */
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+        font-size: 16px; /* Adjust the font size as needed */
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: normal; /* Ensure h2 is not bold */
+    
+    }
+
+    /* Form container styles */
+    .form-container {
+        background-color: #e6e6e6; /* Light grey */
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        margin: 20px auto;
+        flex-grow: 1;
+    }
+
+    /* Button styles */
+    .btn-submit {
+        background-color: #003366; /* Deep blue */
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: #002244; /* Darker blue on hover */
+        }
+
+    /* Validation message styles */
+    .text-danger {
+        color: red;
+        font-size: 14px;
+        margin-top: -15px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Adjust image position */
+    .logo-image {
+        width: 70px;
+        height: 70px;
+        margin-right: 30px;
+        margin-left: 10px; /* Adjust left margin for image */
+    }
+
+</style>
+
+
+<html>
+
+
+
+<body>
+    <div class="background-image"></div>
+    <div class="background-container">
+        <div class="centered-text">
+            <img src="~/Content/themes/base/images/SPCA_logo.png" alt="SPCA Logo" class="logo-image">
+            <h2>Volunteer Registration Form</h2>
+        </div>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+
+                        <br />@Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+
+                        <br />@Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        <br />
+                        <br />@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CellNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control" } })
+
+                        <br /> @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmergencyContactName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EmergencyContactName, new { htmlAttributes = new { @class = "form-control" } })
+
+                        <br /> @Html.ValidationMessageFor(model => model.EmergencyContactName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmergencyContactCellNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EmergencyContactCellNo, new { htmlAttributes = new { @class = "form-control" } })
+                        <br />
+                        <br /> @Html.ValidationMessageFor(model => model.EmergencyContactCellNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Experience, "Experience", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Experience", ViewBag.Experience as SelectList, htmlAttributes: new { @class = "form-control" })
+
+                        <br /> @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Availability, "Availability", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Availability", null, htmlAttributes: new { @class = "form-control" })
+
+                        <br /> @Html.ValidationMessageFor(model => model.Availability, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.VolunteerType, "VolunteerType", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("VolunteerType", null, htmlAttributes: new { @class = "form-control" })
+
+                        <br />@Html.ValidationMessageFor(model => model.VolunteerType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 centered-button-container">
+                        <button type="submit" class="black-outline-button">Submit</button>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- <div> ?8@Html.ActionLink("Back to List", "Index") </div> -->
+</body>
+</html>

@@ -1,0 +1,119 @@
+﻿@{
+    Layout = null; // No layout for this chart view
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Volunteer Type Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #volunteerChart {
+            width: 70%; /* Limiting the max width of the chart */
+            margin: auto;
+        }
+
+        .centered {
+            text-align: center;
+            margin-top: 20px; /* Adjust as needed */
+        }
+
+        .btn-custom {
+            background-color: #444444; /* Slightly lighter grey background */
+            color: #ffffff; /* Lighter grey text color */
+            padding: 10px 20px; /* Increased padding for larger size */
+            font-size: 16px; /* Increased font size */
+            border: 1px solid #cccccc; /* Lighter border */
+            border-radius: 5px; /* Rounded corners */
+            text-decoration: none; /* Remove underline */
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .btn-custom:hover {
+                background-color: #cccccc; /* Slightly darker grey on hover */
+                color: #ffffff; /* White text color on hover */
+                text-decoration: none; /* Remove underline */
+            }
+
+    </style>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <h2 style="text-align: center; margin-bottom: 20px;">Volunteer Distribution Chart</h2>
+        <br />
+        <canvas id="volunteerChart"></canvas>
+    </div>
+    <br />
+    <script>
+        var ctx = document.getElementById('volunteerChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(ViewBag.ChartLabels), // Labels for types
+                datasets: [{
+                    label: 'Volunteer Count',
+                    data: @Html.Raw(ViewBag.ChartCounts), // Count of volunteers
+                    backgroundColor: [
+                        'rgba(173, 216, 230, 0.6)',   // Light Blue
+                        'rgba(255, 255, 153, 0.6)',  // Light Yellow
+                        'rgba(144, 238, 144, 0.6)',  // Light Green
+                       
+                    ],
+                    borderColor: [
+                        'rgba(173, 216, 230, 1)',
+                        'rgba(255, 255, 153, 1)',
+                        'rgba(144, 238, 144, 1)',
+                      
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            // This is where you specify the labels for each volunteer type
+                            generateLabels: function(chart) {
+                                var labels = ['Cat Cuddling', 'Dog Walking' , 'Puppy Training'];
+                                var colors = [
+                                    'rgba(173, 216, 230, 1)',
+                                    'rgba(255, 255, 153, 1)',
+                                    'rgba(144, 238, 144, 1)',
+                                    
+                                ];
+
+                                return labels.map(function(label, index) {
+                                    return {
+                                        text: label,
+                                        fillStyle: colors[index],
+                                        hidden: false,
+                                        lineWidth: 0,
+                                        strokeStyle: colors[index],
+                                        pointStyle: 'rectRounded',
+                                        rotation: 0
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <br />
+    <div class="centered">
+        @Html.ActionLink("Back to Admin Dashboard", "AdminLog", "Users2", null, new { @class = "btn btn-custom" })
+    </div>
+</body>
+</html>
+

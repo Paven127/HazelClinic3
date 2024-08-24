@@ -1,0 +1,123 @@
+﻿@model HazelClinic3.Models.EventContentViewModel
+
+@{
+    ViewBag.Title = "Event Content";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .content-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+            .content-table th, .content-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .content-table th {
+                background-color: #f2f2f2;
+            }
+
+            .content-table img {
+                height: 150px;
+                object-fit: cover;
+            }
+
+            .content-table .document-link {
+                font-size: 14px;
+            }
+
+        .btn-custom {
+            background-color: #003366;
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn-dashboard {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Event Content</h2>
+    <br />
+    <div>
+        @Html.ActionLink("Admin Dashboard", "AdminLog", "Users2", null, new { @class = "btn-dashboard" })
+    </div>
+    <br />
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>Auction Items</th>
+                <th>Documents</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @if (Model.AuctionItems.Any())
+                    {
+                        <ul>
+                            @foreach (var item in Model.AuctionItems)
+                            {
+                                <li>
+                                    <strong>@item.Name</strong>
+                                    @if (item.Image != null)
+                                    {
+                                        <img src="@Url.Action("GetAuctionItemImage", "Events", new { id = item.Id })" alt="Auction Item Image">
+                                    }
+                                    <br />
+                                    <a href="@Url.Action("PlaceBid", "Events", new { id = item.Id })" class="btn btn-custom">Place Bid</a>
+                                    <br />
+                                    <br />
+                                    <br />
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No auction items available for this event.</p>
+                    }
+                </td>
+                <td>
+                    @if (Model.Documents.Any())
+                    {
+                        <ul>
+                            @foreach (var doc in Model.Documents)
+                            {
+                                <li class="document-link">
+                                    <a href="@Url.Action("DownloadDocument", "Events", new { id = doc.Id })">@doc.FileName</a>
+                                    <br />
+                                    <br />
+                                    <br />
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No documents available for this event.</p>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
